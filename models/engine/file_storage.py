@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import models
 import os
 from models.base_model import BaseModel
 import json
@@ -31,7 +32,7 @@ class FileStorage:
                 loaded_objects = json.load(file)
                 for  key, value in loaded_objects.items():
                     class_name, obj_id = key.split('.')
-                    module_name = class_name.lower()  # Adjust based on your module structure
+                    module_name = class_name.lower()
                 try:
                     module = __import__(module_name)
                     class_ = getattr(module, class_name)
