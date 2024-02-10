@@ -33,6 +33,7 @@ class FileStorage:
                 for  key, value in loaded_objects.items():
                     class_name, obj_id = key.split('.')
                     module_name = class_name.lower()
+                    """
                 try:
                     module = __import__(module_name)
                     class_ = getattr(module, class_name)
@@ -43,9 +44,8 @@ class FileStorage:
                     """
                     module = __import__("models." + class_name, fromlist=[class_name])
                     obj = getattr(module, class_name)(**value)
-                    # class_obj = globals()[class_name]
-                    # self.__objects[key] = class_obj(**value)
+                    class_obj = globals()[class_name]
+                    self.__objects[key] = class_obj(**value)
                     self.__objects[key] = obj
-                    """
         except FileNotFoundError:
             pass
