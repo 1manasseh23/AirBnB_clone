@@ -27,25 +27,31 @@ class FileStorage:
     def reload(self):
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as file:
-                if os.stat(self.__file_path).st_size == 0:
-                    return
-                loaded_objects = json.load(file)
-                for  key, value in loaded_objects.items():
-                    class_name, obj_id = key.split('.')
-                    module_name = class_name.lower()
-                try:
-                    module = __import__(module_name)
-                    class_ = getattr(module, class_name)
-                    instance = class_(**value)
-                    self.__objects[key] = instance
-                except (ImportError, AttributeError) as e:
-                    print(f"Error importing {module_name}.{class_name}: {e}")
-                    """
-                    module = __import__("models." + class_name, fromlist=[class_name])
-                    obj = getattr(module, class_name)(**value)
-                    class_obj = globals()[class_name]
-                    self.__objects[key] = class_obj(**value)
-                    self.__objects[key] = obj
-                    """
+                # if os.stat(self.__file_path).st_size == 0:
+                #    return
+                #loaded_objects = json.load(file)
+                #for  key, value in loaded_objects.items():
+                 #   class_name, obj_id = key.split('.')
+                  #  module_name = class_name.lower()
+                #try:
+                 #   module = __import__(module_name)
+                  #  class_ = getattr(module, class_name)
+                   ## instance = class_(**value)
+                    #self.__objects[key] = instance
+                #except (ImportError, AttributeError) as e:
+                 #   print(f"Error importing {module_name}.{class_name}: {e}")
+                  #  """
+                   # module = __import__("models." + class_name, fromlist=[class_name])
+                    #obj = getattr(module, class_name)(**value)
+                    #class_obj = globals()[class_name]
+                    #self.__objects[key] = class_obj(**value)
+                    #self.__objects[key] = obj
+                    #"""
+
+                    new_data = json.load(file)
+                    for key, value in new_data.items():
+                        class_name, obj_id = key.split('.')
+                        new_dict = globals()[class_name](**value)
+                        self.__objects[key] = new_dict
         except FileNotFoundError:
             pass
