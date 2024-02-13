@@ -16,12 +16,14 @@ Args:
     cmd.Cmd
 """
 
+
 class HBNBCommand(cmd.Cmd):
     """
     Write prompt that creates entry point
     """
     prompt = "(hbnb) "
-    valid_classes = ["BaseModel", "User", "Place", "State", "City", "Amenity", "Review"]
+    valid_classes = [
+            "BaseModel", "User", "Place", "State", "City", "Amenity", "Review"]
 
     def do_create(self, arg):
         """
@@ -59,39 +61,12 @@ class HBNBCommand(cmd.Cmd):
             return
 
         instance_id = args[1]
-        if instance_id is not None:
+        key = "{}.{}".format(class_name, instance_id)
+        my_obj = storage.all()
+        if key not in my_obj:
             print("** no instance found **")
         else:
-            new_instance = models.classes[class_name]()
-            new_instance.save()
-            new_instance = models.classes
-            print(new_instance.__str__())
-            return
-        """
-        instance_id = args[1]
-        new_instance = models.classes[class_name]()
-        new_instance.id = instance_id
-        new_instance.save()
-        # instance = storage.save()
-        if instance_id in models.classes:
-            print(new_instance)
-            return
-        else:
-            print("** no instance found **")
-            return
-            # BaseModel.get(instance_idet number
-
-        # try:
-        instance_id = args[1]
-        # instance = BaseModel.get(instance_id)
-        if instance_id not in models.classes:
-            print(instance_id)
-        else:
-            print("** no instance found **")
-            return
-        # except Exception:
-            # print("** no instance found **")
-        """
+            print(my_obj[key])
         pass
 
     def do_destroy(self, arg):
@@ -99,6 +74,7 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id
         """
         args = arg.split()
+        key = None
         if len(args) == 0:
             print("** class name missing **")
             return
@@ -109,15 +85,15 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 2:
             print("** instance id missing **")
             return
-        try:
-            instance_id = args[1]
-            instance = BaseModel.get(instance_id)
-            instance.delete()
-        except Exception:
+
+        instance_id = args[1]
+        key = "{}.{}".format(class_name, instance_id)
+        objects = storage.all()
+        if key not in objects:
             print("** no instance found **")
-        new_instance = models.classes[class_name]()
-        new_instance.save()
-        pass
+        else:
+            del objects[key]
+            storage.save()
 
     def do_all(self, arg):
         """
@@ -129,16 +105,7 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in models.classes:
             print("** class doesn't exist **")
             return
-        """
-        my_inst = storage.all()
-        list_s = []
-        for key in my_inst.keys():
-            list_s.append(list_s)
-        print(list_s)
-        """
-    
         new_instance = models.classes[class_name]()
-        # new_instance = new.save(self)
         new_instance.save()
         print(new_instance.__str__())
         pass
@@ -179,5 +146,7 @@ class HBNBCommand(cmd.Cmd):
         shouldn’t execute anything
         """
         pass
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

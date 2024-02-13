@@ -40,7 +40,8 @@ class BaseModel:
         """
         __str__ should print id and __dict__
         """
-        return "[BaseModel] ({}) {}".format(self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+                self.__class__.__name__,self.id, str(self.__dict__))
 
     def save(self):
         """
