@@ -7,6 +7,7 @@ import models
 import os
 from models.base_model import BaseModel
 import json
+from models.user import User
 """
 class FileStorage: recreate a BaseModel from another one
 by using a dictionary representation
@@ -20,6 +21,9 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+
+    def __init__(self):
+        self.classes = []
 
     def all(self):
         """Returns a dictionary"""
