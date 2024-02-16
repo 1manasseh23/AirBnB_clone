@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in models.classes:
+        if class_name not in self.valid_classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -59,41 +59,24 @@ class HBNBCommand(cmd.Cmd):
             return
 
         instance_id = args[1]
-        if instance_id is not None:
-            print("** no instance found **")
+        new_dict = storage.all()
+        new_key = f"{class_name}.{instance_id}"
+        if new_key in new_dict.keys():
+            print(new_dict[new_key])
         else:
+            print("** no instance found **")
+        """
+        if instance_id is not None:
             new_instance = models.classes[class_name]()
             new_instance.save()
             new_instance = models.classes
             print(new_instance.__str__())
             return
-        """
-        instance_id = args[1]
-        new_instance = models.classes[class_name]()
-        new_instance.id = instance_id
-        new_instance.save()
-        # instance = storage.save()
-        if instance_id in models.classes:
-            print(new_instance)
-            return
-        else:
-            print("** no instance found **")
-            return
-            # BaseModel.get(instance_idet number
-
-        # try:
-        instance_id = args[1]
-        # instance = BaseModel.get(instance_id)
-        if instance_id not in models.classes:
-            print(instance_id)
-        else:
-            print("** no instance found **")
-            return
-        # except Exception:
             # print("** no instance found **")
-        """
+        else:
+            print("** no instance found **")
         pass
-
+        """
     def do_destroy(self, arg):
         """
         Deletes an instance based on the class name and id
@@ -144,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_update(self, arg):
-        """
+        """        
         Updates an instance based on the class name and id
         by adding or updating attribute
         """
@@ -153,12 +136,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in models.classes:
+        if class_name not in self.valid_classes:
             print("** class doesn't exist **")
             return
         new_instance = models.classes[class_name]()
         new_instance.save()
-        print(new_instance.id)
+        # print(new_instance.id)
         pass
 
     def do_quit(self, arg):
