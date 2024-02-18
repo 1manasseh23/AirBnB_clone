@@ -1,0 +1,25 @@
+.filters .popover {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background-color: #FAFAFA;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  list-style: none;
+  padding: 5px;
+  margin-top: 5px;
+  z-index: 1;
+}
+
+.filters .popover li {
+  padding: 5px;
+}
+
+.filters .popover h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.filters div:hover .popover {
+  display: block;
+}
