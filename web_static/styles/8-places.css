@@ -87,6 +87,9 @@ h4 {
 .description {
   text-align: left;
 }
+.icon-user {
+margin-bottom: 0px;
+}
 
 /*.price_by_night {
   font-color: #FF5A5F;
